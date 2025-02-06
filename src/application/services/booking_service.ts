@@ -11,7 +11,7 @@ export class BookingService {
     private readonly bookingRepository: BookingRepository,
     private readonly propertyService: PropertyService,
     private readonly userService: UserService
-  ) {}
+  ) { }
 
   async createBooking(dto: CreateBookingDTO): Promise<Booking> {
     const property = await this.propertyService.findPropertyById(

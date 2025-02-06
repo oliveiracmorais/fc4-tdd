@@ -20,6 +20,18 @@ export class BookingController {
           .json({ message: "Data de início ou fim inválida." });
       }
 
+      if (req.body.guestCount <= 0) {
+        return res
+          .status(400).json({ message: "O número de hóspedes deve ser maior que zero." });
+      }
+
+      const propertyId = req.body.propertyId;
+      if (!propertyId || isNaN(propertyId) || +propertyId <= 0) {
+        return res
+          .status(400).json({ message: "O ID da Propriedade é inválido." });
+      }
+
+
       const dto: CreateBookingDTO = {
         propertyId: req.body.propertyId,
         guestId: req.body.userId,
@@ -44,6 +56,7 @@ export class BookingController {
         },
       });
     } catch (error: any) {
+      console.error(error);
       return res
         .status(400)
         .json({ message: error.message || "An unexpected error occurred" });

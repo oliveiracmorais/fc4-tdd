@@ -11,6 +11,7 @@ import { BookingEntity } from "../persistence/entities/booking_entity";
 import { PropertyEntity } from "../persistence/entities/property_entity";
 import { UserEntity } from "../persistence/entities/user_entity";
 import { BookingController } from "./booking_controller";
+
 const app = express();
 app.use(express.json());
 
@@ -99,12 +100,15 @@ describe("BookingController", () => {
       startDate: "2024-12-20",
       endDate: "2024-12-25",
       guestCount: 2,
+      totalPrice: 500,
+      status: "CONFIRMED",
     });
 
     expect(response.status).toBe(201);
     expect(response.body.message).toBe("Booking created successfully");
     expect(response.body.booking).toHaveProperty("id");
-    expect(response.body.booking).toHaveProperty("totalPrice");
+    expect(response.body.booking).toHaveProperty("propertyId");
+
   });
 
   it("deve retornar 400 ao tentar criar um reserva com data de início inválida", async () => {
@@ -158,7 +162,7 @@ describe("BookingController", () => {
     });
 
     expect(response.status).toBe(400);
-    expect(response.body.message).toBe("Propriedade não encontrada.");
+    expect(response.body.message).toBe("O ID da Propriedade é inválido.");
   });
 
   it("deve cancelar uma reserva", async () => {

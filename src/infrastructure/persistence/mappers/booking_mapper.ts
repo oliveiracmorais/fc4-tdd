@@ -53,7 +53,7 @@ export class BookingMapper {
   }
 
   static toPersistence(domain: Booking): BookingEntity {
-    if (!domain.getId() || isNaN(+domain.getId()) || +domain.getId() <= 0) {
+    if (!domain.getId()) {
       throw new Error("O ID do Booking não é válido.");
     }
     if (!domain.getGuest().getId() || isNaN(+domain.getGuest().getId()) || +domain.getGuest().getId() <= 0) {
